@@ -3,6 +3,8 @@ IoT Central sample for calculating Overall Equipment Effectiveness (OEE) of indu
 
 ![picture alt](images/Dashboard.png "OEE Dashboard")
 
+![picture alt](images/grafana-dashboard.png "OEE Dashboard on GRafana")
+
 ## Contents ##
 
 1. [What is OEE?](https://github.com/iot-for-all/iiot-oee#what-is-oee)
@@ -10,7 +12,8 @@ IoT Central sample for calculating Overall Equipment Effectiveness (OEE) of indu
 3. [Setting up ADX](https://github.com/iot-for-all/iiot-oee#setting-up-adx)
 4. [Setting up IoT Central Application](https://github.com/iot-for-all/iiot-oee#setting-up-iot-central-application)
 5. [Creating ADX Dashboard](https://github.com/iot-for-all/iiot-oee#creating-adx-dashboard)
-6. [Simulator](https://github.com/iot-for-all/iiot-oee#simulator)
+6. [Creating Grafana Dashboard](https://github.com/iot-for-all/iiot-oee#creating-grafana-dashboard)
+7. [Simulator](https://github.com/iot-for-all/iiot-oee#simulator)
 
 
 ## What is OEE? ##
@@ -52,6 +55,9 @@ More information on setting up data export to ADX can be found [here](https://do
 
 ## Creating ADX Dashboard ##
 Now that the ADX Database and the CDE exports are setup, you can setup the ADX dashbaord using the exported [dashboard](setup/ADXDashboard.json) file. Make sure that you change the datasource ID in the file to your ADX datasource. Feel free to create your own dashboard by looking at the sample queries in this file.
+
+## Creating Grafana Dashboard ##
+You can visualize the data in ADX database using Grafana dashboards. Create a new Azure Managed Grafana following instructions [here](https://docs.microsoft.com/en-us/azure/managed-grafana/quickstart-managed-grafana-portal). Create a new ADX datasource following instructions [here](https://docs.microsoft.com/en-us/azure/managed-grafana/how-to-data-source-plugins-managed-identity). Once the datasource is setup, you can setup the Grafana dashbaord using the exported [dashboard](setup/grafana-dashboard.json) file.
 
 ## Simulator ##
 You can [download binaries](https://github.com/iot-for-all/iiot-oee/releases) and run them as is, skip to [running simulator](https://github.com/iot-for-all/iiot-oee#running-simulator) section below.
