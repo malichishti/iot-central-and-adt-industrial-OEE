@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 48,
-  "iteration": 1652109589089,
+  "iteration": 1652197679440,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -713,7 +713,7 @@
             }
           },
           "pluginVersion": "3.7.1",
-          "query": "boltmaker\n| where plantName == '$PlantName'\n| where productionLine == '$ProductionLine'\n| where shiftNumber == tolong('$ShiftNumber')\n| where $__timeFilter(messageTimestamp) \n| where machineHealth == 'Healthy' or machineHealth ==  'Warning'\n| summarize upTime = count() by bin(messageTimestamp, 1m)\n| order by messageTimestamp asc ",
+          "query": "boltmaker\n| where plantName == '$PlantName'\n| where productionLine == '$ProductionLine'\n| where shiftNumber == tolong('$ShiftNumber')\n| where $__timeFilter(messageTimestamp) \n| extend healthyCount = iff (machineHealth == 'Healthy' or machineHealth ==  'Warning', 1, 0), errorCount = iff (machineHealth ==  'Error', 1, 0)\n| summarize upCount = sum(healthyCount), downCount = sum(errorCount) by bin(messageTimestamp, 1m)\n| project messageTimestamp, upCount = iff(downCount == 0, 1, 0)\n| order by messageTimestamp asc ",
           "querySource": "raw",
           "rawMode": true,
           "refId": "A",
@@ -800,7 +800,7 @@
             }
           },
           "pluginVersion": "3.7.1",
-          "query": "boltmaker\n| where plantName == '$PlantName'\n| where productionLine == '$ProductionLine'\n| where shiftNumber == tolong('$ShiftNumber')\n| where $__timeFilter(messageTimestamp) \n| where machineHealth == 'Error'\n| summarize downTime = count() by bin(messageTimestamp, 1m)\n| order by messageTimestamp asc ",
+          "query": "boltmaker\n| where plantName == '$PlantName'\n| where productionLine == '$ProductionLine'\n| where shiftNumber == tolong('$ShiftNumber')\n| where $__timeFilter(messageTimestamp) \n| extend healthyCount = iff (machineHealth == 'Healthy' or machineHealth ==  'Warning', 1, 0), errorCount = iff (machineHealth ==  'Error', 1, 0)\n| summarize upCount = sum(healthyCount), downCount = sum(errorCount) by bin(messageTimestamp, 1m)\n| project messageTimestamp, downCount = iff(downCount > 0, 1, 0)\n| order by messageTimestamp asc ",
           "querySource": "raw",
           "rawMode": true,
           "refId": "A",
@@ -1739,7 +1739,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "5s",
+  "refresh": "30s",
   "schemaVersion": 35,
   "style": "dark",
   "tags": [],
@@ -1827,6 +1827,6 @@
   "timezone": "",
   "title": "Parnell Aerospace",
   "uid": "-A_uuo_7z",
-  "version": 40,
+  "version": 41,
   "weekStart": ""
 }
