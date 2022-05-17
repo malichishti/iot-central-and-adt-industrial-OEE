@@ -186,7 +186,7 @@ func (d *centralDevice) getTelemetryMessage() ([]byte, error) {
 
 	d.boltMachine.OilLevel -= 0.1
 	if d.boltMachine.OilLevel <= 0.0 {
-		d.boltMachine.OilLevel = 100.0
+		d.boltMachine.OilLevel = 80.0
 	}
 
 	if d.boltMachine.OilLevel < 10.0 {
