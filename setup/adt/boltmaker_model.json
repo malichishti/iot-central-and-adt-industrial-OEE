@@ -1,0 +1,220 @@
+[
+  {
+    "@id": "dtmi:parnellAerospace:BoltMakerV1;1",
+    "@type": "Interface",
+    "contents": [
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:plantName;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "PlantName"
+        },
+        "name": "plantName",
+        "schema": "string"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:productionLine;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Production Line"
+        },
+        "name": "productionLine",
+        "schema": "string"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:shiftNumber;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "ShiftNumber"
+        },
+        "name": "shiftNumber",
+        "schema": "integer"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:batchNumber;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Batch Number"
+        },
+        "name": "batchNumber",
+        "schema": "integer"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:messageTimestamp;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "MessageTimestamp"
+        },
+        "name": "messageTimestamp",
+        "schema": "dateTime"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:totalPartsMade;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Total Parts Made"
+        },
+        "name": "totalPartsMade",
+        "schema": "integer"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:defectivePartsMade;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Defective Parts Made"
+        },
+        "name": "defectivePartsMade",
+        "schema": "integer"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:oilLevel;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Oil Level"
+        },
+        "name": "oilLevel",
+        "schema": "double"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:isMachineOn;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Is Machine On"
+        },
+        "name": "isMachineOn",
+        "schema": "boolean",
+        "writable": true
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:telemetryFrequency;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Telemetry Frequency (Secs)"
+        },
+        "name": "telemetryFrequency",
+        "schema": "integer",
+        "writable": true
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:shiftDurationHours;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Shift Duration (Hours)"
+        },
+        "name": "shiftDurationHours",
+        "schema": "integer",
+        "writable": true
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:batchDurationHours;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Batch Duration (Hours)"
+        },
+        "name": "batchDurationHours",
+        "schema": "integer",
+        "writable": true
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:hostName;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "HostName"
+        },
+        "name": "hostName",
+        "schema": "string",
+        "writable": false
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:ipAddress;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "IPAddress"
+        },
+        "name": "ipAddress",
+        "schema": "string",
+        "writable": false
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:hostTime;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "HostTime"
+        },
+        "name": "hostTime",
+        "schema": "dateTime",
+        "writable": false
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:machineHealth;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Machine Health"
+        },
+        "name": "machineHealth",
+        "schema": "string"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:temperature;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Temperature"
+        },
+        "name": "temperature",
+        "schema": "double"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:cpuLoad;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "CPU Load"
+        },
+        "name": "cpuLoad",
+        "schema": "double"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:systemDiskUsedPercent;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "System Disk Used Percent"
+        },
+        "name": "systemDiskUsedPercent",
+        "schema": "integer"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:systemDiskFreePercent;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "System Disk Free Percent"
+        },
+        "name": "systemDiskFreePercent",
+        "schema": "integer"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:memoryUsed;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Memory Used"
+        },
+        "name": "memoryUsed",
+        "schema": "long"
+      },
+      {
+        "@id": "dtmi:parnellAerospace:BoltMakerV1:memoryFree;1",
+        "@type": "Property",
+        "displayName": {
+          "en": "Memory Free"
+        },
+        "name": "memoryFree",
+        "schema": "long"
+      }
+    ],
+    "displayName": {
+      "en": "BoltMaker"
+    },
+    "@context": [
+      "dtmi:iotcentral:context;2",
+      "dtmi:dtdl:context;2"
+    ]
+  }
+]
