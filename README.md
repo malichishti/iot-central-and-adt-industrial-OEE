@@ -161,3 +161,101 @@ If you build binaries from source, they will be in the `bin` folder.
 To start the starling simulation server, run the above executable.
 
 <img src="images/start.png" alt="Starting Simulator" />
+
+## Setting up Digital Twins and 3d Scenes ##
+In this part we will see how to create ADT and link it to IoT Central. Lastly we will also create 3d Scene for the factory floor.
+
+### Export data to Event Hub ###
+1. Provision a new Event Hub as per the instruction [here](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-create).
+    - Add a Send + Listen Policy and then copy the connection string for later use.
+    <img src="images/rwpolicy.png" />
+2. In IoT Central create a Data Export for all your devices to an Event Hub destination as per the instructions [here](https://docs.microsoft.com/en-us/azure/iot-central/core/howto-export-to-event-hubs?tabs=connection-string%2Cjavascript).
+    - Add a new Destination (for simplicity we are using Connection String)
+    <img src="images/createdestination.png" />
+    - Configure the Data Export to export all of the Telemetry to the Event Hub destination.
+    <img src="images/configureexport.png" />
+
+### Create ADT Service ###
+1. Provision Azure Digital Twins instance as per the instruction [here](https://learn.microsoft.com/en-us/azure/digital-twins/how-to-set-up-instance-portal).
+    - Once provisioned go the [Twin explorer](https://learn.microsoft.com/en-us/azure/digital-twins/how-to-use-azure-digital-twins-explorer).
+2. For the device groups/models that you would like to integrate with ADT, upload their DTDL Models into the ADT. A DTDL model for Bolt Maker machine can be found [here](setup/adt/boltmaker_model.json).
+  <img src="images/uploadmodel.png" />
+3. Create default/empty twins of the asset with a Twin Name same as the device id from IoT Central.
+  <img src="images/createtwin.png" />
+  <img src="images/twins.png" />
+
+### Create Azure Function to update twins ###
+Create an Azure Function with a trigger on Event Hub. This would be responsible to receive the telemetry from Event Hub and Patch it in ADT for the respective twin. 
+
+<img src="images/createfunction.png" />
+
+Enable managed Identity
+
+<img src="images/afsystemassignedidentity.png" />
+
+Create the Event Hub trigger
+
+<img src="images/eventhubtrigger.png" />
+
+Specify the Event Hub connection string
+
+<img src="images/eventhubtrigger2.png" />
+
+You can find the source code for this Function at [/Azure Function - Event Hub to ADT/TelemetryTrigger.cs](https://github.com/malichishti/iot-central-3dScenes/blob/main/Azure%20Function%20-%20Event%20Hub%20to%20ADT/TelemetryTrigger.cs) You can see it finds the deviceId from the message which is used to link to the corresponding twin via dtid. Next it sends a Patch to ADT for all telemetry received.
+
+The Azure Function requires following Applications settings defined:
+
+1. EVENTHUB - this is a connection string to the Event Hub
+1. ADT_SERVICE_URL - This is the ADT Instance URL e.g. https://my-twins3.api.aue.digitaltwins.azure.net
+
+**Please Note:** The Azure Function must have **Azure Digital Twins Data Owner** access to the ADT. You can achieve this by giving a System assigned identity to the Azure function and then adding a Role access for it on ADT.
+
+Confirm that the data is reaching the Digital Twin by viewing a specific Twin:
+
+<img src="images/viewtwindata.png" />
+
+### Setup ADT 3d Scenes ###
+
+In order to use 3d Scenes you are required to have a storage account which would be used to store Scene config and model files. Use the instructions below to create and configure the storage account.
+
+1. Create a storage account as per instruction [here](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create?tabs=azure-portal).
+1. Create a private container in the storage account. For instructions, see [Create a container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal#create-a-container).
+  - Take note of the URL of your storage container to use later.
+1. Provide Storage Blob Data Owner or Storage Blob Data Contributor access to your user account. You can grant required roles at either the storage account level or the container level. For instructions and more information about permissions to Azure storage, see [Assign an Azure role](https://learn.microsoft.com/en-us/azure/storage/blobs/assign-azure-role-data-access?tabs=portal#assign-an-azure-role).
+  <img src="images/adtidentity.png" />
+1. Configure CORS for your storage account by adding https://explorer.digitaltwins.azure.net to the allowed origins and enabling all methods. For Allowed header please specify
+
+> Authorization,x-ms-version,x-ms-blob-type
+
+<img src="images/cors.png" />
+
+#### Create your first Scene ####
+
+Create your first scene by using the model [here](setup/adt/RobotArms.glb)
+
+  <img src="images/createscene.png" />
+
+Drilldown into the scene to view the build environment. The scene would be loaded and you now have the option to select certain elements and assign behaviours to them.
+
+1. Start by selecting the robotic arm and clicking "Create new Element"
+<img src="images/newelement.png" />
+2. In the New Element blade, select the Primary Twin which represents this asset
+3. In Behaviours add a new Behaviour, Behaviour allows you to design how this element should respond to the Twin changes and properties.
+    - Status: You can select a property or create a rule which returns a number. Then you are allowed to define a range and assign color to each range. Whenever the value will be in one of the ranges the element would be assigned the corresponding color.
+  <img src="images/behaviourstatus.png" />
+    - Alerts: You can define rules which if evaluated to true will result in an alert icon show up on the asset. You can pick the icon and its color as needed.
+  <img src="images/behaviouralert.png" />
+    - Widgets: This allows you to add different widgets which would show up when the user would select this element. For each widget you are able to select a property that will provide the value for the widget.
+  <img src="images/behaviourwidgets.png" />
+
+You can assign same behaviour to additional elements as well, this ensures that you do not have to create Behaviour again and again for same asset type.
+
+#### View the 3d Scene ####
+
+In order to view the runtime view, click on the View button on top right. You will now be able to see the elements along with the status colors or alerts. You can also select a certain element and view its widgets or other properties.
+
+<img src="images/sceneview.png" />
+
+
+
+
